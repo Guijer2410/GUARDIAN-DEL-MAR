@@ -20,7 +20,7 @@ const LV=[{n:'Defensa del puente',o:'Elimina a 12 enemigos que intentan tomar el
 {n:'Rescate del capitán',o:'Derrota al comandante y libera al capitán (mantén USAR en la celda).'},
 {n:'Confrontación final',o:'Esquiva los proyectiles y hunde la nave enemiga con todo tu arsenal.'}];
 let scene='menu',lv=0,t=0,sh=0,fl=0,last=0,paused=false,unlocked=+(ls('mar_u')||1),p,E,Bu,Pa,T,Sv,It,Vt,Wn,mg,boss,kills,resc,timeL,sp,vt,msg='',msgT=0,al=0,Gr=[],et=0,tk=0,tt=0;
-const CREDITO= MARIANA HERNANDEZ,WP=[{n:'Fusil',m:30,cd:.11,rl:1.2,d:1,pel:1,sp:.05,v:850,life:1.2},{n:'Escopeta',m:6,cd:.75,rl:1.6,d:1,pel:6,sp:.3,v:700,life:.32},{n:'Francotirador',m:5,cd:.9,rl:1.8,d:4,pel:1,sp:0,v:1600,life:1.2}];
+const CREDITO='Tu nombre aquí',WP=[{n:'Fusil',m:30,cd:.11,rl:1.2,d:1,pel:1,sp:.05,v:850,life:1.2},{n:'Escopeta',m:6,cd:.75,rl:1.6,d:1,pel:6,sp:.3,v:700,life:.32},{n:'Francotirador',m:5,cd:.9,rl:1.8,d:4,pel:1,sp:0,v:1600,life:1.2}];
 // ---------- AUDIO ----------
 let A,G0,nb;
 function audioInit(){if(A){if(A.state=='suspended')A.resume();return}
@@ -198,7 +198,44 @@ if(fl>0){x.fillStyle=`rgba(255,255,255,${fl*.5})`;x.fillRect(0,0,W,H)}
 const vg=x.createRadialGradient(480,270,200,480,270,620);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.6)');x.fillStyle=vg;x.fillRect(0,0,W,H);
 if((l==1||l==3||l==6)&&M.floor(t*1)%2==0){x.fillStyle='rgba(255,0,0,.06)';x.fillRect(0,0,W,H)}
 if(p.hp<30){x.fillStyle=`rgba(200,0,0,${.12+.08*S(t*6)})`;x.fillRect(0,0,W,H)}}
-function menuBg(){sky('#2f5b8a','#f4b27a',300);sea(300,'#2a5578','#081a2c');bridge(640);x.fillStyle='#3a4650';x.beginPath();x.moveTo(260,372);x.lineTo(1000,372);x.lineTo(1000,410);x.lineTo(300,410);x.fill();x.fillStyle='rgba(0,0,0,.35)';x.fillRect(0,0,W,H)}
+function ship(cx,cy,sz,tt){x.save();x.translate(cx,cy+S(tt*1.1)*3);x.rotate(S(tt*.8)*.012);x.scale(sz,sz);
+const pg=(a,col)=>{x.fillStyle=col;x.beginPath();x.moveTo(a[0][0],a[0][1]);for(let k=1;k<a.length;k++)x.lineTo(a[k][0],a[k][1]);x.closePath();x.fill()};
+const hg=x.createLinearGradient(0,-56,0,6);hg.addColorStop(0,'#74818c');hg.addColorStop(1,'#1f272e');
+pg([[-218,-56],[-208,-30],[-174,0],[192,0],[214,-32],[214,-38],[-120,-38],[-180,-48]],hg);pg([[-174,0],[192,0],[190,6],[-168,6]],'#6e2222');
+x.strokeStyle='rgba(255,185,115,.8)';x.lineWidth=2.5;x.beginPath();x.moveTo(-218,-56);x.lineTo(-208,-30);x.lineTo(-174,0);x.stroke();
+x.fillStyle='rgba(255,255,255,.9)';x.font='bold 24px Impact,Arial Black,sans-serif';x.textAlign='left';x.fillText('88',-120,-12);
+x.fillStyle='rgba(15,20,25,.7)';for(let k=0;k<17;k++)x.fillRect(-60+k*14,-27,5,5);
+pg([[-160,-38],[-156,-54],[-130,-54],[-124,-38]],'#5a6670');x.fillStyle='#3a444c';x.fillRect(-200,-49,48,5);
+pg([[-72,-38],[-64,-84],[74,-84],[84,-38]],'#6e7b86');pg([[-52,-84],[-46,-114],[56,-114],[64,-84]],'#7b8893');pg([[-30,-114],[-26,-136],[36,-136],[42,-114]],'#8799a4');
+x.fillStyle='rgba(0,0,0,.22)';x.fillRect(26,-84,56,46);x.fillRect(30,-114,30,30);
+x.fillStyle='#ffd88a';for(let k=0;k<8;k++)x.fillRect(-56+k*17,-70,9,6);for(let k=0;k<6;k++)x.fillRect(-36+k*17,-100,10,6);x.fillStyle='#1c2b38';x.fillRect(-22,-128,52,7);
+x.fillStyle='#38424b';x.fillRect(4,-236,5,102);x.fillRect(-14,-204,42,3);x.fillRect(-8,-180,30,3);x.save();x.translate(7,-240);x.scale(S(tt*1.6),1);x.fillStyle='#9aa8b2';x.fillRect(-28,-3,56,6);x.restore();
+if(M.floor(tt*2)%2){x.fillStyle='#ff3b3b';x.beginPath();x.arc(7,-246,3,0,7);x.fill()}
+pg([[34,-114],[40,-150],[72,-150],[78,-114]],'#4a555e');x.fillStyle='#1d2429';x.fillRect(38,-154,36,6);
+for(let k=0;k<7;k++){x.fillStyle=`rgba(50,52,62,${.3-k*.04})`;x.beginPath();x.arc(60+k*20+(tt*18)%20,-160-k*9,7+k*3,0,7);x.fill()}
+pg([[96,-38],[98,-72],[152,-72],[154,-38]],'#66727c');x.fillStyle='#434d55';x.fillRect(108,-60,30,22);x.fillStyle='#cfd6da';x.beginPath();x.arc(86,-44,8,M.PI,0);x.fill();
+x.fillStyle='#46515a';for(let k=0;k<4;k++)x.fillRect(162+k*11,-48,9,10);
+x.fillStyle='#999';x.fillRect(206,-86,2,50);const fw=S(tt*5)*3;x.fillStyle='#d7263d';x.beginPath();x.moveTo(208,-86);x.lineTo(238,-82+fw);x.lineTo(238,-68-fw);x.lineTo(208,-70);x.fill();
+x.restore()}
+function menuBg(dim){const g=x.createLinearGradient(0,0,0,360);g.addColorStop(0,'#131c3b');g.addColorStop(.45,'#7a3f74');g.addColorStop(.75,'#e8696b');g.addColorStop(1,'#ffc27a');x.fillStyle=g;x.fillRect(0,0,W,360);
+const sx=210,sy=352,gs=x.createRadialGradient(sx,sy,6,sx,sy,340);gs.addColorStop(0,'rgba(255,240,190,1)');gs.addColorStop(.12,'rgba(255,200,120,.8)');gs.addColorStop(.4,'rgba(255,140,90,.28)');gs.addColorStop(1,'rgba(255,120,80,0)');x.fillStyle=gs;x.fillRect(0,0,W,380);
+x.save();x.translate(sx,sy);for(let k=0;k<11;k++){const a=-3.14+k*.3+S(t*.2+k)*.03;x.fillStyle='rgba(255,220,160,.07)';x.beginPath();x.moveTo(0,0);x.lineTo(C(a-.05)*800,S(a-.05)*800);x.lineTo(C(a+.05)*800,S(a+.05)*800);x.fill()}x.restore();
+x.fillStyle='rgba(35,20,65,.35)';for(let k=0;k<7;k++){const cx=((k*190+t*7)%1300)-200;x.beginPath();x.ellipse(cx,60+k*30,170,9+k%3*3,0,0,7);x.fill()}
+x.fillStyle='rgba(255,175,125,.22)';for(let k=0;k<5;k++){const cx=((k*260+t*5)%1300)-200;x.beginPath();x.ellipse(cx,230+k*20,200,7,0,0,7);x.fill()}
+x.fillStyle='#fff4cf';x.beginPath();x.arc(sx,sy,36,0,7);x.fill();
+sea(352,'#b5535f','#09162a');for(let k=0;k<16;k++){x.fillStyle=`rgba(255,215,150,${.35-k*.018})`;x.fillRect(sx-50+k*2+S(t*2+k)*10,356+k*11,100-k*4,3)}
+const cy=386;ship(645,cy,1.45,t);
+x.fillStyle='rgba(255,255,255,.8)';for(let k=0;k<26;k++){const px=645+205*1.45+k*13,py=cy+4+k*.5+S(k+t*3)*2;x.globalAlpha=M.max(0,.7-k*.027);x.fillRect(px,py,12,2+k*.18)}x.globalAlpha=1;
+for(let k=0;k<16;k++){x.fillStyle='rgba(255,255,255,'+(.8-k*.04)+')';x.beginPath();x.arc(645-205*1.45+k*7,cy-2+S(k*1.3+t*4)*3,5+S(k+t*3)*2,0,7);x.fill()}
+x.fillStyle='rgba(15,40,70,.5)';x.beginPath();x.moveTo(300,cy+2);for(let i=300;i<=960;i+=14)x.lineTo(i,cy+2+S(i*.05+t*2)*2.5);x.lineTo(960,cy+30);x.lineTo(300,cy+30);x.fill();
+x.strokeStyle='#241a38';x.lineWidth=2;for(let k=0;k<4;k++){const bx=((k*260+t*45)%1200)-120,by=90+k*38+S(t*2+k)*8;x.beginPath();x.moveTo(bx-11,by);x.quadraticCurveTo(bx-5,by-9,bx,by);x.quadraticCurveTo(bx+5,by-9,bx+11,by);x.stroke()}
+const gb=x.createLinearGradient(0,370,0,H);gb.addColorStop(0,'rgba(4,10,20,0)');gb.addColorStop(.35,'rgba(4,10,20,.7)');gb.addColorStop(1,'rgba(4,10,20,.95)');x.fillStyle=gb;x.fillRect(0,370,W,H-370);
+if(dim){x.fillStyle='rgba(0,0,0,.3)';x.fillRect(0,0,W,H)}}
+function title(){x.save();x.textAlign='left';x.shadowColor='rgba(0,0,0,.65)';x.shadowBlur=16;x.shadowOffsetY=4;
+const g=x.createLinearGradient(0,60,0,220);g.addColorStop(0,'#ffffff');g.addColorStop(1,'#a9bccb');x.fillStyle=g;
+x.font='bold 74px Impact,"Arial Black",sans-serif';x.fillText('EL GUARDIÁN',36,132);x.font='bold 98px Impact,"Arial Black",sans-serif';x.fillText('DEL MAR',62,222);
+x.shadowBlur=0;x.shadowOffsetY=0;x.fillStyle='#ffd9a0';x.fillRect(66,240,160,3);x.font='bold 17px "Trebuchet MS",sans-serif';x.fillText('TU MISIÓN: PROTEGER EL BARCO',66,268);
+x.strokeStyle='#fff';x.lineWidth=3;x.beginPath();x.arc(58,36,20,0,7);x.stroke();tx('⚓',58,45,22,'#fff','center');x.restore()}
 function endDraw(){const e=M.min(1,et/7);sky('#27406b','#ffb878');sea(300,'#7a5f78','#14233a');bridge(700);deck();x.fillStyle='rgba(5,10,25,'+(.65*(1-e))+')';x.fillRect(0,0,W,H);
 for(let i=0;i<4;i++){const bx=((i*300+et*40)%1100)-100,by=60+i*26+S(et*2+i)*8;x.strokeStyle='#223';x.lineWidth=2;x.beginPath();x.moveTo(bx-10,by);x.quadraticCurveTo(bx-5,by-8,bx,by);x.quadraticCurveTo(bx+5,by-8,bx+10,by);x.stroke()}
 man(150,410,1,0,0,0);x.fillStyle='rgba(0,0,0,.45)';x.fillRect(150,150,660,260);
@@ -207,10 +244,10 @@ const L=(s,y,z,col,at)=>{if(et>at){x.globalAlpha=M.min(1,et-at);tx(s,480,y,z,col
 L('¡MISIÓN CUMPLIDA!',200,44,'#fff',1);L('Salvaste el barco y a toda la tripulación.',245,20,'#ffe9a8',2.5);L('Eres un verdadero Guardián del Mar.',275,20,'#cfe3f2',3.5);
 L('Enemigos eliminados: '+tk+'   ·   Tiempo: '+M.floor(tt/60)+':'+String(M.floor(tt%60)).padStart(2,'0'),320,17,'#9fd0ff',5);L('Creado por '+CREDITO,355,18,'#fff',6);L('Toca para volver al menú',395,16,'#aac',7)}
 function draw(){if(scene=='end'){endDraw();return}
-if(scene=='menu'){menuBg();tx('⚓',130,70,44,'#fff','center');tx('EL GUARDIÁN',130,150,64,'#fff','left',1);tx('DEL MAR',150,215,64,'#e7eef5','left',1);tx('Tu misión: proteger el barco',150,248,20,'#ffd9a0');
+if(scene=='menu'){menuBg();title();
 LV.forEach((l,i)=>{const cx=20+i*116,ok=i<unlocked;x.fillStyle=ok?'rgba(10,30,55,.85)':'rgba(0,0,0,.7)';x.strokeStyle=ok?'#4aa3e8':'#333';x.lineWidth=2;x.fillRect(cx,400,108,80);x.strokeRect(cx,400,108,80);tx(ok?String(i+1):'🔒',cx+54,432,26,'#fff','center',1);wr(l.n,cx+54,452,100,13,11,ok?'#cfe3f2':'#666','center')});
-tx('El mar no perdona, pero tú puedes',480,515,13,'#9fb6c8','center');tx('Creado por '+CREDITO,480,532,11,'#7f96a8','center');if(!A)tx('Toca un nivel para empezar (activa el sonido)',480,385,14,'#ffe9a8','center');return}
-if(scene=='brief'){menuBg();x.fillStyle='rgba(0,0,0,.55)';x.fillRect(120,70,720,400);tx(`NIVEL ${lv+1}`,480,125,22,'#7dc0ff','center',1);tx(LV[lv].n.toUpperCase(),480,170,38,'#fff','center',1);
+tx('El mar no perdona, pero tú puedes',480,515,13,'#9fb6c8','center');tx('Creado por '+CREDITO,480,532,11,'#7f96a8','center');if(!A)tx('Toca un nivel para empezar (activa el sonido)',66,296,14,'#ffe9a8');return}
+if(scene=='brief'){menuBg(1);x.fillStyle='rgba(0,0,0,.55)';x.fillRect(120,70,720,400);tx(`NIVEL ${lv+1}`,480,125,22,'#7dc0ff','center',1);tx(LV[lv].n.toUpperCase(),480,170,38,'#fff','center',1);
 wr(lv==0?'Eres un cadete de la marina. Tu barco ha sido atacado por una tripulación enemiga. Debes sobrevivir, cumplir las misiones de cada nivel y proteger la nave. No estás solo: tu equipo y tus habilidades serán clave.':LV[lv].o,480,225,620,28,19,'#e5eef6','center');
 if(lv==0)wr('Misión: '+LV[0].o,480,345,620,24,17,'#ffe9a8','center');tx('◀ ▶ mover · FUEGO dispara · USAR interactuar · GRAN. granada · ARMA cambia de arma',480,400,14,'#9fd0ff','center');tx('TOCA PARA COMENZAR',480,445,22,'#fff','center',1);return}
 x.save();if(sh>0)x.translate((R2()-.5)*sh*22,(R2()-.5)*sh*22);world();x.restore();hud();
